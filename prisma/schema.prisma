@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int          @id @default(autoincrement()) @map("user_id")
+  name        String
+  email       String       @unique
+  phone       String
+  password    String
+  complaints  Complaint[]
+  connections Connection[]
+
+  @@map("users")
+}
+
+model Connection {
+  id           Int           @id @default(autoincrement()) @map("conn_id")
+  userId       Int           @map("user_id")
+  meterNo      String        @unique @map("meter_no")
+  tariffRate   Decimal       @map("tariff_rate")
+  tariffType   String        @map("tariff_type")
+  bills        Bill[]
+  user         User          @relation(fields: [userId], references: [id])
+  consumptions Consumption[]
+
+  @@map("connections")
+}
+
+model Consumption {
+  id         Int        @id @default(autoincrement()) @map("cons_id")
+  connId     Int        @map("conn_id")
+  units      Int
+  date       DateTime
+  connection Connection @relation(fields: [connId], references: [id])
+
+  @@map("consumption")
+}
+
+model Bill {
+  id         Int        @id @default(autoincrement()) @map("bill_id")
+  connId     Int        @map("conn_id")
+  amount     Decimal
+  dueDate    DateTime   @map("due_date")
+  connection Connection @relation(fields: [connId], references: [id])
+  payments   Payment[]
+
+  @@map("bills")
+}
+
+model Payment {
+  id      Int      @id @default(autoincrement()) @map("payment_id")
+  billId  Int      @map("bill_id")
+  amount  Decimal
+  status  String
+  invoice Invoice?
+  bill    Bill     @relation(fields: [billId], references: [id])
+
+  @@map("payments")
+}
+
+model Invoice {
+  id        Int     @id @default(autoincrement()) @map("invoice_id")
+  paymentId Int     @unique @map("payment_id")
+  payment   Payment @relation(fields: [paymentId], references: [id])
+
+  @@map("invoices")
+}
+
+model Complaint {
+  id          Int    @id @default(autoincrement()) @map("complaint_id")
+  userId      Int    @map("user_id")
+  adminId     Int?   @map("admin_id")
+  description String
+  status      String
+  admin       Admin? @relation(fields: [adminId], references: [id])
+  user        User   @relation(fields: [userId], references: [id])
+
+  @@map("complaints")
+}
+
+model Admin {
+  id         Int         @id @default(autoincrement()) @map("admin_id")
+  name       String
+  email      String      @unique
+  password   String
+  complaints Complaint[]
+
+  @@map("admins")
+}
