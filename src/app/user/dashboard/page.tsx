@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type Connection = {
   id: number;
@@ -105,15 +106,12 @@ export default function UserDashboard() {
             </p>
           </div>
           
-          <div className="bg-white shadow rounded-lg p-6">
-            <h3 className="font-medium text-lg mb-3">Submit a Complaint</h3>
-            <p className="text-sm text-gray-500 mb-4">
-              Having an issue with your connection or bill? Submit a complaint and our team will assist you.
+          <Link href="/user/complaints" className="bg-white shadow rounded-lg p-6 hover:bg-gray-50">
+            <h3 className="font-medium text-lg mb-3">Complaints</h3>
+            <p className="text-sm text-gray-500">
+              Submit a new complaint or check the status of your existing complaints.
             </p>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-              New Complaint
-            </button>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

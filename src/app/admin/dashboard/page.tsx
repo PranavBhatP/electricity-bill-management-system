@@ -26,20 +26,20 @@ export default function AdminDashboard() {
           </p>
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="border p-4 rounded-lg">
+            <Link href="/admin/users" className="border p-4 rounded-lg hover:bg-gray-50">
               <h3 className="font-medium text-lg mb-2">Users</h3>
               <p className="text-sm text-gray-500">Manage all system users</p>
-            </div>
+            </Link>
             
             <Link href="/admin/connections" className="border p-4 rounded-lg hover:bg-gray-50">
               <h3 className="font-medium text-lg mb-2">Connections</h3>
               <p className="text-sm text-gray-500">Manage electricity connections</p>
             </Link>
             
-            <div className="border p-4 rounded-lg">
+            <Link href="/admin/complaints" className="border p-4 rounded-lg hover:bg-gray-50">
               <h3 className="font-medium text-lg mb-2">Complaints</h3>
               <p className="text-sm text-gray-500">Manage and resolve user complaints</p>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
