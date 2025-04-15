@@ -25,7 +25,7 @@ export default function AdminDashboard() {
             This is your admin dashboard. From here you can manage users, connections, bills, and complaints.
           </p>
           
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link href="/admin/users" className="border p-4 rounded-lg hover:bg-gray-50">
               <h3 className="font-medium text-lg mb-2">Users</h3>
               <p className="text-sm text-gray-500">Manage all system users</p>
@@ -34,6 +34,11 @@ export default function AdminDashboard() {
             <Link href="/admin/connections" className="border p-4 rounded-lg hover:bg-gray-50">
               <h3 className="font-medium text-lg mb-2">Connections</h3>
               <p className="text-sm text-gray-500">Manage electricity connections</p>
+            </Link>
+            
+            <Link href="/admin/bills" className="border p-4 rounded-lg hover:bg-gray-50">
+              <h3 className="font-medium text-lg mb-2">Bills</h3>
+              <p className="text-sm text-gray-500">Create and manage customer bills</p>
             </Link>
             
             <Link href="/admin/complaints" className="border p-4 rounded-lg hover:bg-gray-50">

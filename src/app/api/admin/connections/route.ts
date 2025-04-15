@@ -3,6 +3,43 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
+// Get all connections
+export async function GET() {
+  try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session || session.user.role !== "admin") {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const connections = await prisma.connection.findMany({
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true
+          }
+        }
+      },
+      orderBy: {
+        id: 'desc'
+      }
+    });
+
+    return NextResponse.json(connections);
+  } catch (error) {
+    console.error("Error fetching connections:", error);
+    return NextResponse.json(
+      { error: "Error fetching connections" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: Request) {
   try {
     // Check if the user is authenticated and is an admin
