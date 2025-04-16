@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Electricity Bill Management System
 
-## Getting Started
+A modern web application for managing electricity connections, bills, and customer relationships. Built with Next.js 13, Prisma, and TypeScript.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### User Features
+- **Dashboard**
+  - View all electricity connections
+  - Monitor consumption history with interactive graphs
+  - Track pending bills and payment status
+  - Quick access to bill payment and complaint submission
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Connections**
+  - View connection details including meter number and tariff information
+  - Track consumption history for each connection
+  - View connection-specific billing history
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Bills & Payments**
+  - View all bills with due dates and amounts
+  - Online bill payment functionality
+  - Payment history and receipt tracking
+  - Payment status monitoring
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Complaints**
+  - Submit complaints about service issues
+  - Track complaint status
+  - View complaint resolution updates
 
-## Learn More
+### Admin Features
+- **Dashboard**
+  - Real-time statistics on users, connections, and bills
+  - Visual representation of paid vs unpaid bills
+  - Quick access to all management functions
 
-To learn more about Next.js, take a look at the following resources:
+- **User Management**
+  - View and manage all system users
+  - Create new user accounts
+  - Delete users with cascading data cleanup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Connection Management**
+  - Create new connections for users
+  - Assign meter numbers and set tariff rates
+  - Different tariff types (Residential, Commercial, Industrial, Agricultural)
+  - View all connections and their details
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Bill Management**
+  - Generate bills for connections
+  - Track consumption units
+  - Monitor payment status
+  - View payment history
 
-## Deploy on Vercel
+- **Complaint Management**
+  - View and respond to user complaints
+  - Update complaint status
+  - Track resolution progress
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technology Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**
+  - Next.js 13 (App Router)
+  - React
+  - TypeScript
+  - Tailwind CSS
+  - Chart.js for data visualization
+
+- **Backend**
+  - Next.js API Routes
+  - Prisma ORM
+  - PostgreSQL Database
+  - NextAuth.js for authentication
+
+## Setup Instructions
+
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
+   cd ebill-management-system
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   DATABASE_URL="postgresql://username:password@localhost:5432/ebill_db"
+   NEXTAUTH_SECRET="your-secret-key"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
+
+4. **Database Setup**
+   ```bash
+   # Generate Prisma Client
+   npx prisma generate
+
+   # Run Database Migrations
+   npx prisma migrate dev
+   ```
+
+5. **Run the Development Server**
+   ```bash
+   npm run dev
+   ```
+
+6. **Access the Application**
+   - Open [http://localhost:3000](http://localhost:3000) in your browser
+   - Default admin credentials:
+     - Email: admin@example.com
+     - Password: admin123
+
+## Database Schema
+
+The application uses the following main models:
+- User (Regular users and admins)
+- Connection (Electricity connections)
+- Bill (Monthly bills)
+- Payment (Payment records)
+- Consumption (Monthly unit consumption)
+- Complaint (User complaints)
+
+## Security Features
+
+- Secure authentication using NextAuth.js
+- Role-based access control (Admin/User)
+- Protected API routes
+

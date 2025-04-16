@@ -160,7 +160,7 @@ export default function ManageConnections() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Manage Connections</h1>
+          <h1 className="text-3xl text-black font-bold">Manage Connections</h1>
           <Link
             href="/admin/dashboard"
             className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
@@ -170,7 +170,7 @@ export default function ManageConnections() {
         </div>
         
         <div className="bg-white shadow rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Create New Connection</h2>
+          <h2 className="text-xl text-black font-semibold mb-4">Create New Connection</h2>
           
           {formError && (
             <div className="p-3 mb-4 bg-red-100 text-red-700 rounded-md text-sm">
@@ -193,7 +193,7 @@ export default function ManageConnections() {
                 id="userId"
                 value={selectedUserId}
                 onChange={(e) => setSelectedUserId(e.target.value ? Number(e.target.value) : "")}
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                className="mt-1 block w-full text-black pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                 required
               >
                 <option value="">Select a user</option>
@@ -214,7 +214,7 @@ export default function ManageConnections() {
                 id="meterNo"
                 value={meterNo}
                 onChange={(e) => setMeterNo(e.target.value)}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full text-black border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="Enter unique meter number"
                 required
               />
@@ -229,7 +229,7 @@ export default function ManageConnections() {
                   id="tariffType"
                   value={tariffType}
                   onChange={(e) => setTariffType(e.target.value)}
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  className="mt-1 block w-full text-black pl-3 pr-10 py-2 border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                   required
                 >
                   {tariffOptions.map((option) => (
@@ -249,7 +249,7 @@ export default function ManageConnections() {
                   id="tariffRate"
                   value={tariffRate}
                   onChange={(e) => setTariffRate(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full text-black border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Enter rate per unit"
                   step="0.01"
                   min="0.01"
@@ -271,7 +271,7 @@ export default function ManageConnections() {
         </div>
         
         <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Users and Their Connections</h2>
+          <h2 className="text-xl text-black font-semibold mb-4">Users and Their Connections</h2>
           
           {error && (
             <div className="p-3 mb-4 bg-red-100 text-red-700 rounded-md text-sm">
@@ -280,7 +280,7 @@ export default function ManageConnections() {
           )}
           
           {loading ? (
-            <p className="text-gray-500">Loading users...</p>
+            <p className="text-gray-700">Loading users...</p>
           ) : (
             <div className="space-y-8">
               {users.length === 0 ? (
@@ -288,22 +288,22 @@ export default function ManageConnections() {
               ) : (
                 users.map((user) => (
                   <div key={user.id} className="border rounded-lg p-4">
-                    <h3 className="font-medium text-lg">{user.name}</h3>
+                    <h3 className="font-medium text-black text-lg">{user.name}</h3>
                     <p className="text-sm text-gray-500">Email: {user.email}</p>
                     <p className="text-sm text-gray-500">Phone: {user.phone}</p>
                     
                     <div className="mt-4">
-                      <h4 className="font-medium">Connections:</h4>
+                      <h4 className="font-medium text-black">Connections:</h4>
                       
                       {user.connections.length === 0 ? (
                         <p className="text-sm text-gray-500 mt-2">No connections yet.</p>
                       ) : (
                         <div className="mt-2 space-y-2">
                           {user.connections.map((connection) => (
-                            <div key={connection.id} className="bg-gray-50 p-3 rounded-md">
-                              <p className="text-sm"><span className="font-medium">Meter No:</span> {connection.meterNo}</p>
-                              <p className="text-sm"><span className="font-medium">Tariff Type:</span> {connection.tariffType}</p>
-                              <p className="text-sm"><span className="font-medium">Tariff Rate:</span> ${connection.tariffRate} per unit</p>
+                            <div key={connection.id} className="p-3 rounded-md">
+                              <p className="text-sm text-black"><span className="font-medium">Meter No:</span> {connection.meterNo}</p>
+                              <p className="text-sm text-black"><span className="font-medium">Tariff Type:</span> {connection.tariffType}</p>
+                              <p className="text-sm text-black"><span className="font-medium">Tariff Rate:</span> ${connection.tariffRate} per unit</p>
                             </div>
                           ))}
                         </div>

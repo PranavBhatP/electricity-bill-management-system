@@ -21,10 +21,13 @@ export async function GET() {
         id: true,
         name: true,
         email: true,
+        phone: true,
         connections: {
           select: {
             id: true,
             meterNo: true,
+            tariffType: true,
+            tariffRate: true,
             bills: {
               select: {
                 id: true,

@@ -181,7 +181,7 @@ export default function BillsDashboard() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Bills Management</h1>
+          <h1 className="text-3xl text-black font-bold">Bills Management</h1>
           <Link 
             href="/admin/dashboard"
             className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
@@ -192,7 +192,7 @@ export default function BillsDashboard() {
 
         {/* Create Bill Form */}
         <div className="bg-white shadow rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Create New Bill</h2>
+          <h2 className="text-xl text-black font-semibold mb-4">Create New Bill</h2>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -204,7 +204,7 @@ export default function BillsDashboard() {
                   id="connectionId"
                   value={selectedConnectionId}
                   onChange={(e) => setSelectedConnectionId(e.target.value ? Number(e.target.value) : "")}
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                  className="mt-1 block text-black w-full pl-3 pr-10 py-2 text-base border-gray-800 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
                   required
                 >
                   <option value="">Select a connection</option>
@@ -225,7 +225,7 @@ export default function BillsDashboard() {
                   id="unitsConsumed"
                   value={unitsConsumed}
                   onChange={(e) => setUnitsConsumed(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block text-black w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   placeholder="Enter units consumed"
                   min="0"
                   step="1"
@@ -242,7 +242,7 @@ export default function BillsDashboard() {
                   id="dueDate"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full text-black border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   required
                 />
               </div>

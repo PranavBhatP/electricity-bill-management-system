@@ -95,7 +95,7 @@ export default function UsersManagement() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Users Management</h1>
+          <h1 className="text-3xl text-black font-bold">Users Management</h1>
           <Link 
             href="/admin/dashboard"
             className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
@@ -107,7 +107,7 @@ export default function UsersManagement() {
         {/* Users List */}
         <div className="bg-white shadow rounded-lg overflow-hidden">
           <div className="p-6">
-            <h2 className="text-xl font-semibold mb-4">All Users</h2>
+            <h2 className="text-xl text-black font-semibold mb-4">All Users</h2>
             
             {error && (
               <div className="mb-4 text-sm text-red-600">
