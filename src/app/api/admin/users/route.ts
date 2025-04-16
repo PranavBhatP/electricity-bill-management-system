@@ -17,15 +17,35 @@ export async function GET() {
 
     // Fetch all users
     const users = await prisma.user.findMany({
-      include: {
-        connections: true
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        connections: {
+          select: {
+            id: true,
+            meterNo: true,
+            bills: {
+              select: {
+                id: true,
+                amount: true
+              }
+            }
+          }
+        }
       },
       orderBy: {
         name: 'asc'
       }
     });
 
-    return NextResponse.json(users);
+    // Transform the data to get the bills count
+    const transformedUsers = users.map(user => ({
+      ...user,
+      bills: user.connections.flatMap(conn => conn.bills)
+    }));
+
+    return NextResponse.json(transformedUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json(

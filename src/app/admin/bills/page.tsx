@@ -18,12 +18,27 @@ type Connection = {
   user: User;
 };
 
+type Payment = {
+  id: number;
+  amount: string;
+  status: string;
+};
+
 type Bill = {
   id: number;
   amount: string;
   dueDate: string;
   connection: Connection;
+  payments: Payment[];
 };
+
+// Add these utility functions outside the component
+const padZero = (num: number) => num.toString().padStart(2, '0');
+
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
 
 export default function BillsDashboard() {
   const { data: session } = useSession();
@@ -131,10 +146,8 @@ export default function BillsDashboard() {
         throw new Error(data.error || "Failed to create bill");
       }
       
-      const newBill = await response.json();
-      
-      // Add the new bill to the list
-      setBills([newBill, ...bills]);
+      // Instead of adding the new bill directly, fetch all bills again
+      await fetchBills();
       
       // Reset form
       setSelectedConnectionId("");
@@ -150,18 +163,18 @@ export default function BillsDashboard() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    const date = new Date(dateString);
+    const month = months[date.getMonth()];
+    const day = padZero(date.getDate());
+    const year = date.getFullYear();
+    return `${month} ${day}, ${year}`;
   };
 
   const formatCurrency = (amount: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(parseFloat(amount));
+    const value = parseFloat(amount);
+    const dollars = Math.floor(value);
+    const cents = Math.round((value - dollars) * 100);
+    return `$${dollars.toLocaleString()}.${padZero(cents)}`;
   };
 
   return (
@@ -292,17 +305,23 @@ export default function BillsDashboard() {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Customer
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Meter No
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Amount
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Bill Amount
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Due Date
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Payment Status
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Payment Details
                       </th>
                     </tr>
                   </thead>
@@ -320,11 +339,34 @@ export default function BillsDashboard() {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {bill.connection.meterNo}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {formatCurrency(bill.amount)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {formatDate(bill.dueDate)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${bill.payments.length > 0 
+                              ? bill.payments[0].status === 'PAID' 
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-yellow-100 text-yellow-800'
+                              : 'bg-red-100 text-red-800'}`}
+                          >
+                            {bill.payments.length > 0 
+                              ? bill.payments[0].status
+                              : 'UNPAID'}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {bill.payments.length > 0 ? (
+                            <div>
+                              <div>Amount Paid: {formatCurrency(bill.payments[0].amount)}</div>
+                              <div>Status: {bill.payments[0].status}</div>
+                            </div>
+                          ) : (
+                            "No payment recorded"
+                          )}
                         </td>
                       </tr>
                     ))}

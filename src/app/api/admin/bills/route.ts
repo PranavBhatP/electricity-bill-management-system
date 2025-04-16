@@ -27,6 +27,13 @@ export async function GET() {
               }
             }
           }
+        },
+        payments: {
+          select: {
+            id: true,
+            amount: true,
+            status: true
+          }
         }
       },
       orderBy: {
@@ -116,7 +123,8 @@ export async function POST(request: Request) {
               }
             }
           }
-        }
+        },
+        payments: true
       }
     });
 

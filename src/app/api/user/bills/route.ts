@@ -15,27 +15,20 @@ export async function GET() {
       );
     }
 
-    // Get user's connections first
-    const connections = await prisma.connection.findMany({
-      where: {
-        userId: parseInt(session.user.id)
-      },
-      select: {
-        id: true
-      }
-    });
-
-    const connectionIds = connections.map(conn => conn.id);
-
-    // Get bills for all user's connections
     const bills = await prisma.bill.findMany({
       where: {
-        connId: {
-          in: connectionIds
+        connection: {
+          userId: parseInt(session.user.id)
         }
       },
       include: {
-        connection: true,
+        connection: {
+          select: {
+            meterNo: true,
+            tariffType: true,
+            tariffRate: true
+          }
+        },
         payments: {
           select: {
             id: true,
@@ -45,7 +38,7 @@ export async function GET() {
         }
       },
       orderBy: {
-        dueDate: 'desc'
+        id: 'desc'
       }
     });
 
